@@ -5,7 +5,7 @@
 有三种方式：%|.format|f''
 
 ```
-name = 'Mike'
+name = 'Jack'
 age = 35
 
 print('My name is %s, I am %d years old.' % (name, age))
@@ -14,17 +14,25 @@ print(f'My name is {name}, I am {age} years old.')
 ```
 
 # 3.函数，位置参数，关键字参数
-args接收多余的位置参数，存放在元组中，可以与kwds同时使用
+args接收多余的位置参数，存放在元组中
 ```
 def func1(name, *args):
     print(args)
-
-func1('Jack', 1, 2, 3)
+    
+func1('Jack', 25, 13012345678, 'jack@email.com')
 ```
 kwds接收多余的关键字参数，存放在字典中
 ```
 def func2(name, **kwds):
     print(kwds)
+    
+func2('Jack', age=25, phone=13012345678, email='jack@email.com')
+```
+args kwds同时使用
+```
+def func3(name, *args, **kwds):
+    print('args:', args)
+    print('kwds:', kwds)
 
-func2('Jack', a=1, b=2, c=3)
+func3('Jack', 25, 13012345678, email='jack@email.com', country='USA')
 ```

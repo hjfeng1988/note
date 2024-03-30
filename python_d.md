@@ -1,52 +1,39 @@
-# 8.类，实例方法，类方法，静态方法，属性方法
+# 7.装饰器，类装饰器，带参数的类装饰器
+类装饰器
 ```
-class MyClass:
-    def instance_method(self):
-        print('This is a instance method')
-    
-    @classmethod
-    def class_method(cls):
-        print('This is a class method')
-    # class_method = classmethod(class_method)
+class A:
+    def __init__(self, f):
+        print("inside A.__init__()")
 
-    @staticmethod
-    def static_method():
-        print('This is a static method')
-    # static_method = staticmethod(static_method)
+    def __call__(self):
+        print("inside A.__call__()")
 
-    @property
-    def property_method(self):
-        print('This is a property method')
-        print('Don\'t need () after property_method')
+@A
+def func1():
+    print("inside func1()")
+
+
+print("Finished decorating func1()")
+func1()
 ```
-
-
-实例方法：实例化后调用
+带参数的类装饰器
 ```
-c = MyClass()
-c.instance_method()
-MyClass.instance_method(c)
-```
+class B:
+    def __init__(self, level):
+        print("inside B.__init__()")
+        self.level = level
 
+    def __call__(self, func):
+        print(f"[{self.level}]:inside B.__call__()")
+        def wrapper():
+            print(f"[{self.level}]: inside wrapper()")
+            return func()
+        return wrapper
 
-类方法：不必实例化，可通过类直接调用
-```
-MyClass.class_method()
-c = MyClass()
-c.class_method()
-```
+@B('DEBUG')
+def func2():
+    print("inside func2()")
 
-
-静态方法：不需要传入self和cls，不能调用类中定义的属性和其它方法
-```
-MyClass.static_method()
-c = MyClass()
-c.static_method()
-```
-
-
-属性方法：实例通过属性形式调用方法，调用时property_method不用加`()`
-```
-c = MyClass()
-c.property_method
+print("Finished decorating func2()")
+func2()
 ```
